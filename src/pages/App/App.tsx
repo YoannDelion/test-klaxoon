@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Button from '../../components/Button'
 import TextInput from '../../components/TextInput'
 import './App.css'
 
@@ -13,6 +14,7 @@ function App() {
     <div className='App'>
       <h1>Mes bookmarks</h1>
       <TextInput value={link} setValue={handleChange} />
+      <Button handleClick={() => console.log(link)}>Enregistrer</Button>
     </div>
   )
 }
