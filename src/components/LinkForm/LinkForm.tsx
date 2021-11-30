@@ -5,19 +5,29 @@ import TextInput from '../TextInput/TextInput'
 
 export default function LinkForm() {
   const [link, setLink] = useState('')
-  const [error, setError] = useState(false)
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
 
   const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
     setLink(e.currentTarget.value.trim())
   }
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    setError('')
     if (checkLinkFormat(link)) {
-      setError(false)
-      // Send link to API
+      setLoading(true)
+      try {
+        const res = await fetch(`http://noembed.com/embed?url=${link}`)
+        const data = await res.json()
+        console.log(data)
+      } catch (e) {
+        setError('Une erreur est survenur, merci de réessayer')
+      } finally {
+        setLoading(false)
+      }
     } else {
-      setError(true)
+      setError("Format du lien invalide, merci de vérifier le format de l'url")
     }
   }
 
@@ -26,15 +36,12 @@ export default function LinkForm() {
       <p>Ajouter un bookmark</p>
       <TextInput value={link} setValue={handleChange} />
       <Button>Enregistrer</Button>
-      {error && (
-        <div>
-          <p>Format du lien invalide, il doit avoir une des deux formes suivantes :</p>
-          <ul>
-            <li>https://vimeo.com/565486457</li>
-            <li>https://www.flickr.com/photos/feuilllu/45771361701</li>
-          </ul>
-        </div>
-      )}
+      <p>Formats possibles de l'url :</p>
+      <ul>
+        <li>https://vimeo.com/565486457</li>
+        <li>https://www.flickr.com/photos/feuilllu/45771361701</li>
+      </ul>
+      {error && <p>{error}</p>}
     </form>
   )
 }
