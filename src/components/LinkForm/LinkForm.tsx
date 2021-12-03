@@ -1,9 +1,14 @@
 import { useState } from 'react'
+import { Link } from '../../types/link'
 import checkLinkFormat from '../../utils/checkLinkFormat'
 import Button from '../Button/Button'
 import TextInput from '../TextInput/TextInput'
 
-export default function LinkForm() {
+interface Props {
+  addLinkData: (link: Link) => void
+}
+
+export default function LinkForm({ addLinkData }: Props) {
   const [link, setLink] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
@@ -20,7 +25,11 @@ export default function LinkForm() {
       try {
         const res = await fetch(`http://noembed.com/embed?url=${link}`)
         const data = await res.json()
-        console.log(data)
+        if (data.error) {
+          setError('Une erreur est survenur, merci de vérifier le lien et de réessayer')
+        } else {
+          addLinkData(data)
+        }
       } catch (e) {
         setError('Une erreur est survenur, merci de réessayer')
       } finally {
@@ -35,7 +44,7 @@ export default function LinkForm() {
     <form onSubmit={handleSubmit}>
       <p>Ajouter un bookmark</p>
       <TextInput value={link} setValue={handleChange} />
-      <Button>Enregistrer</Button>
+      <Button type='submit'>Enregistrer</Button>
       <p>Formats possibles de l'url :</p>
       <ul>
         <li>https://vimeo.com/565486457</li>
