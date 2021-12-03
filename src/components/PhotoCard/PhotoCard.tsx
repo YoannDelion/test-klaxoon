@@ -3,6 +3,7 @@ import Button from '../Button/Button'
 import Card from '../Card/Card'
 
 export default function PhotoCard({
+  removeLinkData,
   url,
   title,
   authorName,
@@ -27,6 +28,7 @@ export default function PhotoCard({
           Voir l'image
         </a>
       </Button>
+      <Button handleClick={() => removeLinkData(url)}>Supprimer</Button>
     </Card>
   )
 }

@@ -3,6 +3,7 @@ export interface MediaCardProps {
   url: string
   title: string
   authorName: string
+  removeLinkData: (url: string) => void
 }
 
 export interface VideoCardProps extends MediaCardProps {

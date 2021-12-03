@@ -1,7 +1,5 @@
 import { useState } from 'react'
-import Button from '../../components/Button/Button'
 import LinkForm from '../../components/LinkForm/LinkForm'
-import Card from '../../components/Card/Card'
 import './App.css'
 import VideoCard from '../../components/VideoCard/VideoCard'
 import PhotoCard from '../../components/PhotoCard/PhotoCard'
@@ -68,6 +66,10 @@ function App() {
     setLinkList((linkList) => [...linkList, link])
   }
 
+  const removeLinkData = (url: string) => {
+    setLinkList((linkList) => linkList.filter((link) => link.url !== url))
+  }
+
   return (
     <div className='App'>
       <h1>Mes bookmarks</h1>
@@ -90,6 +92,8 @@ function App() {
             case 'photo':
               return (
                 <PhotoCard
+                  key={`${index}-${url}`}
+                  removeLinkData={removeLinkData}
                   thumbnailUrl={thumbnail_url}
                   url={url}
                   title={title}
@@ -101,6 +105,8 @@ function App() {
             case 'video':
               return (
                 <VideoCard
+                  key={`${index}-${url}`}
+                  removeLinkData={removeLinkData}
                   thumbnailUrl={thumbnail_url}
                   url={url}
                   title={title}

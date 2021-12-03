@@ -4,6 +4,7 @@ import Button from '../Button/Button'
 import Card from '../Card/Card'
 
 export default function VideoCard({
+  removeLinkData,
   thumbnailUrl,
   url,
   title,
@@ -24,6 +25,7 @@ export default function VideoCard({
           Voir la vidéo
         </a>
       </Button>
+      <Button handleClick={() => removeLinkData(url)}>Supprimer</Button>
     </Card>
   )
 }
