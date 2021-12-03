@@ -5,7 +5,7 @@ Pas d'attention portée sur l'aspect UI/UX
 ## Installation et lancement du projet 
 `git clone https://github.com/YoannDelion/test-klaxoon.git`
 
-`cd klaxoon`
+`cd test-klaxoon`
 
 `yarn install`
 
